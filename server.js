@@ -52,18 +52,34 @@ app.get('/api/todos/search', function search(req, res) {
 app.get('/api/todos', function index(req, res) {
   /* This endpoint responds with all of the todos
    */
+   retData = {todos};
+   res.json(retData);
 });
 
 app.post('/api/todos', function create(req, res) {
   /* This endpoint will add a todo to our "database"
    * and respond with the newly created todo.
    */
+   let new_todo = req.body;
+   if (todos.length) {
+     new_todo._id = todos[todos.length-1]._id+1;
+   } else {
+     new_todo._id = 1;
+   }
+   todos.push[new_todo];
+   res.json(new_todo);
+
 });
 
 app.get('/api/todos/:id', function show(req, res) {
   /* This endpoint will return a single todo with the
    * id specified in the route parameter (:id)
    */
+   let todo_id = parseInt(req.params.id);
+   let todo = todos.find(function(f){
+     return f._id === todo_id;
+   });
+   res.json({todo});
 });
 
 app.put('/api/todos/:id', function update(req, res) {
